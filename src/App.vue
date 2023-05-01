@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div class="black-screen" style="z-index: -1;"></div>
     <div class="sidebar" :class="{ 'sidebar--open': isSidebarOpen }">
       <button class="sidebar__toggle" @click="toggleSidebar">
         <span v-if="isSidebarOpen"></span>
@@ -45,7 +46,7 @@
     </div>
     <div class="main" :class="{ 'main--shifted': isSidebarOpen }">
       <h1 class="title">Songify</h1>
-      <form @submit.prevent="search">
+      <form class="search-form narrow-form" @submit.prevent="search">
         <label for="query">Hľadanie:</label>
         <input type="text" v-model="query" id="query" :placeholder="placeholder"/>
         <button type="submit" class="search-btn">Vyhľadaj TU</button>
@@ -276,7 +277,7 @@ body {
 .main {
   margin-left: 0;
   transition: margin-left 0.3s ease-in-out;
-
+  z-index: 1;
   padding-left: 1px;
   padding-left: 20px;
   padding-right: 20px;
@@ -298,6 +299,16 @@ body {
   margin-bottom: 40px;
   text-align: center;
   text-transform: uppercase;
+}
+
+.black-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  opacity: 0.8;
 }
 
 form {
@@ -400,8 +411,37 @@ button[type="submit"] {
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .song-card {
+    margin-left: 30px;
+  }
+}
+
 .song-card__img {
   flex: 1 0 0;
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+  .search-form {
+    display: flex;
+    flex-direction: column;
+  }
+  .search-form label,
+  .search-form input,
+  .search-form button {
+    margin-bottom: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .narrow-form{
+  margin-left: 70px;
+  width: 60%;
+}
 }
 
 @media screen and (min-width: 768px) {
